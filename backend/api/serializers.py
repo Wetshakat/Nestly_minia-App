@@ -19,6 +19,6 @@ class UserSerializer(serializers.ModelSerializer):
 class AttractionSerializer(serializers.ModelSerializer):
     class Meta:
         model = AttractionSite
-        fields = ["name","description","longitude","latitude"]
+        fields = ["name","image","description","longitude","latitude"]
         
     
