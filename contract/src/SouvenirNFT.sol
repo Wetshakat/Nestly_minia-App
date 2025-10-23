@@ -3,6 +3,7 @@ pragma solidity ^0.8.26;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "./Events.sol";
 
 contract SouvenirNFT is ERC721, Ownable {
     uint256 public nextTokenId = 1;
@@ -15,8 +16,6 @@ contract SouvenirNFT is ERC721, Ownable {
 
     // Address or contract that is allowed to trigger minting (e.g., your registry contract)
     address public minterContract;
-
-    event SouvenirMinted(address indexed to, uint256 indexed tokenId, uint256 indexed attractionId);
 
     constructor(string memory name_, string memory symbol_) ERC721(name_, symbol_) {
         // initial setup if needed
