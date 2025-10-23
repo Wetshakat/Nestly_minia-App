@@ -88,7 +88,9 @@ Repository Setup
 git clone https://github.com/Wetshakat/Nestly_minia-App.git
 
 cd nestly-frontend
+
 npm install
+
 npm run dev
 
 
