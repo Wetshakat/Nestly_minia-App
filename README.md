@@ -1,13 +1,16 @@
 Nestly — The Onchain Tourism Explorer
+
 Built on Base. Built for explorers.
 
 **Overview**
+
 Nestly is the onchain travel discovery and booking platform redefining how people explore
 the world.
 Built natively on Base, Nestly connects travelers to verified local guides and authentic
 attractions, bringing trust, transparency, and ownership to global tourism.
 
 **The Problem**
+
 Every year, over 150 million travelers spend more than $1.4 trillion exploring the world.
 But the industry remains broken:
 - Fake or unverified guides
@@ -16,6 +19,7 @@ But the industry remains broken:
 Travelers deserve better — and Web3 makes it possible.
 
 **The Solution — Nestly**
+
 Nestly brings tourism onchain:
 - Discover verified local attractions
 - Connect directly with trusted guides
@@ -23,12 +27,14 @@ Nestly brings tourism onchain:
 No middlemen. No scams. Just real travel, powered by Base.
 
 **Why Onchain**
+
 Trust & Transparency — Every guide and experience is verified onchain
 Ownership — Your trips become digital collectibles, forever yours
 Instant Payments — Direct, borderless, low-fee transactions via Base
 Empowerment — Local guides earn fairly, without platform exploitation.
 
 **Why Base**
+
 Base offers the speed, scalability, and simplicity needed to take Nestly global:
 - Ultra-low fees and high-speed transactions
 - Ethereum-grade security
@@ -52,6 +58,7 @@ Revenue Streams:**
 5. Loyalty & Rewards Layer — Base-native rewards for long-term growth.
 
 **Mission & Vision**
+
 Mission: To make travel trustworthy, rewarding, and onchain — connecting explorers with
 verified local guides and authentic experiences.
 Vision: To become the world’s leading onchain travel network, where every trip, guide, and
@@ -59,6 +66,7 @@ memory is verified, owned, and celebrated on Base.
 
 
 **Team Nestly**
+
 1. Racy Dyelshak Ishaku— 
 2. Saad Umar Ibrahim
 
