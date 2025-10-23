@@ -3,6 +3,7 @@ pragma solidity ^0.8.26;
 
 import "./Errors.sol";
 import "./Events.sol";
+import "./SouvenirNFT.sol";
 
 contract AttractionRegistry {
     address public admin;
@@ -60,9 +61,12 @@ contract AttractionRegistry {
         _;
     }
 
-    constructor(address _admin) {
+    SouvenirNFT public souvenirNFT;
+
+    constructor(address _admin, address _souvenirNFTAddress) {
         if (_admin == address(0)) revert NotAdmin();
         admin = _admin;
+        souvenirNFT = SouvenirNFT(_souvenirNFTAddress);
     }
 
     function addVerifiedCreator(address _creator) external onlyAdmin {
@@ -120,6 +124,19 @@ contract AttractionRegistry {
         onlyAttractionCreator(_attractionId)
     {
         attractions[_attractionId].isActive = _active;
+    }
+
+    function mintSouvenir(uint256 _attractionId, string memory _tokenURI) external payable {
+        Attraction storage attr = attractions[_attractionId];
+        if (!attr.isActive) revert AttractionNotActive(_attractionId);
+        if (msg.value != attr.price) revert IncorrectFee(msg.value, attr.price);
+
+        souvenirNFT.mintSouvenir(msg.sender, _attractionId, _tokenURI);
+
+        (bool success, ) = attr.creator.call{value: msg.value}("");
+        if (!success) revert TransferFailed();
+
+        emit SouvenirMinted(msg.sender, souvenirNFT.nextTokenId() - 1, _attractionId);
     }
 
     function createEvent(
