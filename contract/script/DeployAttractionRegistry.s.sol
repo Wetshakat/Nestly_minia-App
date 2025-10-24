@@ -18,15 +18,15 @@ contract DeployAttractionRegistry is Script {
 
         // Deploy the SouvenirNFT contract
         SouvenirNFT souvenirNFT = new SouvenirNFT("Nestly Souvenir", "NSTLY");
-        console2.log("✅ SouvenirNFT deployed at:", address(souvenirNFT));
+        console2.log("SouvenirNFT deployed at:", address(souvenirNFT));
 
         // Deploy the AttractionRegistry contract
         AttractionRegistry registry = new AttractionRegistry(admin, address(souvenirNFT));
-        console2.log("✅ AttractionRegistry deployed at:", address(registry));
+        console2.log("AttractionRegistry deployed at:", address(registry));
 
         // Set the minter contract on the SouvenirNFT
         souvenirNFT.setMinterContract(address(registry));
-        console2.log("✅ Minter contract set on SouvenirNFT.");
+        console2.log("Minter contract set on SouvenirNFT.");
 
         // Stop broadcasting
         vm.stopBroadcast();

@@ -6,14 +6,18 @@ import "../src/Errors.sol";
 import "../src/Events.sol";
 import "../src/AttractionRegistry.sol";
 
+import "../src/SouvenirNFT.sol";
+
 contract AttractionRegistryTest is Test {
     AttractionRegistry registry;
+    SouvenirNFT nft;
     address admin   = address(0xABCD);
     address creator = address(0xBEEF);
     address other   = address(0xCAFE);
 
     function setUp() public {
-        registry = new AttractionRegistry(admin);
+        nft = new SouvenirNFT("Test NFT", "TNFT");
+        registry = new AttractionRegistry(admin, address(nft));
         vm.prank(admin);
         registry.addVerifiedCreator(creator);
     }
