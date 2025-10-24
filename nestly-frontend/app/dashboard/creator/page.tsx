@@ -22,7 +22,7 @@ export default function CreatorDashboardPage() {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <Spinner size="lg" />
+        <Spinner className="size-12" />
       </div>
     )
   }
@@ -32,8 +32,10 @@ export default function CreatorDashboardPage() {
       <EmptyState
         title="Error loading dashboard"
         description={error}
-        buttonText="Try again"
-        buttonAction={() => window.location.reload()}
+        action={{
+          label: "Try again",
+          onClick: () => window.location.reload(),
+        }}
       />
     )
   }
@@ -45,7 +47,7 @@ export default function CreatorDashboardPage() {
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-3xl font-bold mb-6">Creator Dashboard</h1>
-      <CreatorDashboard creatorId={user.id} />
+      <CreatorDashboard userId={user.id} onBack={() => router.push("/")} />
     </div>
   )
 }

@@ -19,7 +19,7 @@ export function FarcasterAuth({ onAuthSuccess }: FarcasterAuthProps) {
   })
   const [showCreatorForm, setShowCreatorForm] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [farcasterId, setFarcasterId] = useState<number | null>(null) // New state for Farcaster ID
+  
 
   useEffect(() => {
     if (typeof window !== "undefined" && selectedRole) {
@@ -36,7 +36,7 @@ export function FarcasterAuth({ onAuthSuccess }: FarcasterAuthProps) {
       // TODO: Implement actual Farcaster authentication here to get real fid, message, and signature.
       // This would typically involve using a Farcaster client library to prompt the user to sign a message.
       // For now, this will make the Farcaster login non-functional until real implementation is added.
-      const mockFid = farcasterId; // Use the existing farcasterId if available, or prompt for it
+      const mockFid = 123; // Mock FID
       const mockMessage = `Signed message for FID ${mockFid}`;
       const mockSignature = `0x${Math.random().toString(16).substr(2, 64)}`;
 
@@ -74,7 +74,7 @@ export function FarcasterAuth({ onAuthSuccess }: FarcasterAuthProps) {
       }
 
       const data = await response.json()
-      setFarcasterId(data.user.farcasterId); // Store FID from response
+      
 
       if (selectedRole === "creator" && !data.user.is_approved) {
         setShowCreatorForm(true)
@@ -96,7 +96,6 @@ export function FarcasterAuth({ onAuthSuccess }: FarcasterAuthProps) {
   if (showCreatorForm) {
     return (
       <CreatorRegistration
-        farcasterId={farcasterId} // Pass farcasterId to CreatorRegistration
         onSuccess={(user) => {
           if (typeof window !== "undefined") {
             localStorage.removeItem(LOCAL_STORAGE_ROLE_KEY) // Clear role on creator registration success
@@ -106,7 +105,7 @@ export function FarcasterAuth({ onAuthSuccess }: FarcasterAuthProps) {
         onBack={() => {
           setShowCreatorForm(false)
           setSelectedRole(null)
-          setFarcasterId(null); // Clear FID on back
+          
           if (typeof window !== "undefined") {
             localStorage.removeItem(LOCAL_STORAGE_ROLE_KEY)
           }

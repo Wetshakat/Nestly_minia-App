@@ -36,14 +36,12 @@ export default function LoginPage() {
 
   // Simulated auth success (e.g. login button)
   const handleBasicAuthSuccess = async () => {
-    const mockUser = { name: "Guest User", email: "guest@example.com" }
     setRegistrationStep("chooseRole")
-    await login(mockUser, null)
   }
   
 
   // Handle registration success
-  const handleRegistrationSuccess = async (registeredUser, registeredRole) => {
+  const handleRegistrationSuccess = async (registeredUser: { id: string; username: string; avatar?: string }, registeredRole: "traveler" | "creator") => {
     await login(registeredUser, registeredRole)
     router.replace("/")
   }

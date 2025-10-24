@@ -9,14 +9,23 @@ import { Input } from "@/components/ui/input"
 interface CreatorRegistrationProps {
   onSuccess: (user: any) => void
   onBack: () => void
-  farcasterId: number | null // New prop for Farcaster ID
+}
+
+interface CreatorFormData {
+  creatorType: "individual" | "company";
+  firstName: string;
+  lastName: string;
+  companyName: string;
+  registrationNumber: string;
+  address: string;
+  phone: string;
 }
 
 const LOCAL_STORAGE_KEY = "creatorRegistrationFormData"
 
-export function CreatorRegistration({ onSuccess, onBack, farcasterId }: CreatorRegistrationProps) {
+export function CreatorRegistration({ onSuccess, onBack }: CreatorRegistrationProps) {
   const [isLoading, setIsLoading] = useState(false)
-  const [formData, setFormData] = useState(() => {
+  const [formData, setFormData] = useState<CreatorFormData>(() => {
     if (typeof window !== "undefined") {
       const savedData = localStorage.getItem(LOCAL_STORAGE_KEY)
       return savedData
@@ -62,17 +71,11 @@ export function CreatorRegistration({ onSuccess, onBack, farcasterId }: CreatorR
     setError("")
     setIsLoading(true)
 
-    if (!farcasterId) {
-      setError("Farcaster ID is missing. Please try authenticating again.")
-      setIsLoading(false)
-      return
-    }
-
     try {
       const response = await fetch("/api/creators/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, fid: farcasterId }), // Include farcasterId
+        body: JSON.stringify(formData),
       })
 
       if (response.ok) {
