@@ -30,13 +30,13 @@ interface AttractionDetailProps {
   attractionId: number
   role: "traveler" | "creator" | null
   onBack: () => void
+  onClaimSouvenir: () => void
 }
 
-export function AttractionDetail({ attractionId, role, onBack }: AttractionDetailProps) {
+export function AttractionDetail({ attractionId, role, onBack, onClaimSouvenir }: AttractionDetailProps) {
   const [attraction, setAttraction] = useState<AttractionDetailData | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [activeTab, setActiveTab] = useState<"info" | "events">("info")
-  const [showClaimModal, setShowClaimModal] = useState(false)
 
   useEffect(() => {
     const fetchAttraction = async () => {
@@ -153,7 +153,7 @@ export function AttractionDetail({ attractionId, role, onBack }: AttractionDetai
 
                 {role === "traveler" && (
                   <Button
-                    onClick={() => setShowClaimModal(true)}
+                    onClick={onClaimSouvenir}
                     className="w-full bg-accent hover:bg-accent text-accent-foreground font-bold py-3 text-lg rounded-lg transition-all duration-300 hover:shadow-lg active:scale-95"
                   >
                     Claim Souvenir NFT
@@ -221,14 +221,6 @@ export function AttractionDetail({ attractionId, role, onBack }: AttractionDetai
           </div>
         </div>
       </div>
-
-      {showClaimModal && (
-        <SouvenirClaimModal
-          attractionId={attractionId}
-          attractionName={attraction.name}
-          onClose={() => setShowClaimModal(false)}
-        />
-      )}
     </>
   )
 }

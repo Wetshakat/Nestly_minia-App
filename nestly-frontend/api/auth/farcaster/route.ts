@@ -20,13 +20,15 @@ export async function POST(request: NextRequest) {
     }
 
     // 1. Verify Farcaster message and signature
-    // In a real application, you would verify the message and signature against a Farcaster Hub.
-    // For this example, we'll assume the fid and signature are valid if provided.
-    // const hubMessage = Message.decode(Buffer.from(message, 'hex'));
-    // const result = await client.verifyMessage(hubMessage);
-    // if (!result.isOk() || result.value.fid !== fid) {
-    //   return NextResponse.json({ error: "Farcaster authentication failed" }, { status: 401 });
-    // }
+    if (!HUB_URL) {
+      return NextResponse.json({ error: "Farcaster Hub URL is not configured." }, { status: 500 });
+    }
+
+    const hubMessage = Message.decode(Buffer.from(message, 'hex'));
+    const result = await client.verifyMessage(hubMessage);
+    if (!result.isOk() || result.value.fid !== fid) {
+      return NextResponse.json({ error: "Farcaster authentication failed" }, { status: 401 });
+    }
 
     let user = users.get(fid)
 

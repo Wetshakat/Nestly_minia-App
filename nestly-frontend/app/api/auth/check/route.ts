@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
 export async function GET() {
-  const cookie = cookies().get("user-token");
+  const cookie = (await cookies()).get("user-token");
   if (!cookie) {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
   }
