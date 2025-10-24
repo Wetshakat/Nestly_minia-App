@@ -1,13 +1,14 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import dynamic from "next/dynamic"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { AttractionCard } from "./attraction-card"
-import { MapView } from "./mapview"
-
 import { AttractionCardSkeleton } from "./skeleton-loader"
 import { EmptyState } from "./empty-state"
+
+const MapView = dynamic(() => import("./mapview").then(mod => mod.MapView), { ssr: false })
 
 interface Attraction {
   id: number
@@ -16,20 +17,21 @@ interface Attraction {
   latitude: number
   longitude: number
   price: number
+  imageUrl?: string
 }
 
 interface AttractionBrowserProps {
   role: "traveler" | "creator" | null
   onSelectAttraction?: (id: number) => void
+  onAttractionsLoaded?: (attractions: Attraction[]) => void
 }
 
-export function AttractionBrowser({ role, onSelectAttraction }: AttractionBrowserProps) {
+export function AttractionBrowser({ role, onSelectAttraction, onAttractionsLoaded }: AttractionBrowserProps) {
   const [attractions, setAttractions] = useState<Attraction[]>([])
   const [filteredAttractions, setFilteredAttractions] = useState<Attraction[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState("")
   const [viewMode, setViewMode] = useState<"grid" | "map">("grid")
-  const [selectedAttraction, setSelectedAttraction] = useState<Attraction | null>(null)
 
   useEffect(() => {
     const fetchAttractions = async () => {
@@ -39,6 +41,7 @@ export function AttractionBrowser({ role, onSelectAttraction }: AttractionBrowse
           const data = await response.json()
           setAttractions(data)
           setFilteredAttractions(data)
+          onAttractionsLoaded?.(data)
         }
       } catch (error) {
         console.error("Failed to fetch attractions:", error)
@@ -72,7 +75,7 @@ export function AttractionBrowser({ role, onSelectAttraction }: AttractionBrowse
 
       {role === "creator" && (
         <div className="mb-8">
-          <Button className="bg-primary hover:bg-primary text-primary-foreground font-semibold rounded-lg shadow-md hover:shadow-lg transition-all">
+          <Button className="bg-primary text-primary-foreground font-semibold rounded-lg shadow-md hover:shadow-lg transition-all">
             + Add New Attraction
           </Button>
         </div>
@@ -144,7 +147,6 @@ export function AttractionBrowser({ role, onSelectAttraction }: AttractionBrowse
                 attraction={attraction}
                 role={role}
                 onSelect={() => {
-                  setSelectedAttraction(attraction)
                   onSelectAttraction?.(attraction.id)
                 }}
               />

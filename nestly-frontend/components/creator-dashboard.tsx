@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { AttractionCard } from "./attraction-card"
 
 interface CreatorDashboardProps {
-  userId: number
+  userId: string
   onBack: () => void
 }
 
