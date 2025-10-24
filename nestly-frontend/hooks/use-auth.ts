@@ -17,35 +17,39 @@ export const useAuth = () => {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await fetch("/api/auth/check");
-        if (res.ok) {
-          const data = await res.json();
-          setUser(data.user);
-          setRole(data.role);
-        } else {
-          setUser(null);
-          setRole(null);
-        }
-      } catch (err) {
-        setError("Failed to check authentication status.");
-        setUser(null);
-        setRole(null);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    checkAuth();
-  }, []);
-
-  const login = async (user: { id: string; username: string; avatar?: string }, userRole: "traveler" | "creator") => {
-    setIsLoading(true);
-    setUser(user);
-    setRole(userRole);
-    setIsLoading(false);
-    return Promise.resolve();
-  };
+            const checkAuth = async () => {
+              try {
+                const res = await fetch("/api/auth/check")
+                if (res.ok) {
+                  const data = await res.json()
+                  setUser(data.user)
+                  setRole(data.role)
+                } else if (res.status === 401) {
+                  // Not authenticated
+                  setUser(null)
+                  setRole(null)
+                } else {
+                  // Other errors
+                  setError(`Authentication check failed: ${res.statusText}`)
+                  setUser(null)
+                  setRole(null)
+                }
+              } catch (err) {
+                setError("Failed to check authentication status.")
+                setUser(null)
+                setRole(null)
+              } finally {
+                setIsLoading(false)
+              }
+            }
+            checkAuth()
+          }, [])
+  const login = (user: { id: string; username: string; avatar?: string }, userRole: "traveler" | "creator") => {
+    setIsLoading(true)
+    setUser(user)
+    setRole(userRole)
+    setIsLoading(false)
+  }
 
   const logout = async () => {
     setIsLoading(true);

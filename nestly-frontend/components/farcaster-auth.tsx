@@ -33,8 +33,10 @@ export function FarcasterAuth({ onAuthSuccess }: FarcasterAuthProps) {
     setIsLoading(true)
     setError(null)
     try {
-      // Simulate Farcaster login data for demonstration
-      const mockFid = Math.floor(Math.random() * 1000000) + 1; // Random FID
+      // TODO: Implement actual Farcaster authentication here to get real fid, message, and signature.
+      // This would typically involve using a Farcaster client library to prompt the user to sign a message.
+      // For now, this will make the Farcaster login non-functional until real implementation is added.
+      const mockFid = farcasterId; // Use the existing farcasterId if available, or prompt for it
       const mockMessage = `Signed message for FID ${mockFid}`;
       const mockSignature = `0x${Math.random().toString(16).substr(2, 64)}`;
 

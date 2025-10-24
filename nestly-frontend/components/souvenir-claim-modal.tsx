@@ -21,7 +21,7 @@ export function SouvenirClaimModal({ attractionId, attractionName, onClose }: So
       const response = await fetch("/api/souvenirs/claim", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ attractionId }),
+        body: JSON.stringify({ attractionId, address: "0xDF00c0Dbb5eED7D22AaceE185959119F0D63E369" }),
       })
 
       if (response.ok) {

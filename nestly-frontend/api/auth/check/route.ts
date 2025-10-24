@@ -5,20 +5,7 @@ export async function GET(request: NextRequest) {
     const sessionCookie = request.cookies.get("session")
 
     if (!sessionCookie) {
-      const mockUser = {
-        id: "user1",
-        username: "Alice Traveler",
-        farcasterAddress: "0x1234567890abcdef",
-        is_approved: false,
-        created_at: new Date().toISOString(),
-      }
-
-      console.log("[v0] No session found, returning mock user for demo")
-      return NextResponse.json({
-        user: mockUser,
-        role: "traveler",
-        isDemo: true,
-      })
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
     }
 
     const user = JSON.parse(sessionCookie.value)
